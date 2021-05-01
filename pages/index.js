@@ -1,9 +1,8 @@
 import * as React from 'react';
-import ProTip from '../src/ProTip';
-import Link from '../src/Link';
 import Copyright from '../src/Copyright';
 import Card from 'components/Card';
 import { Grid, Typography, Container, Box } from '@material-ui/core'
+import axios from 'axios';
 
 export default function Index(props) {
   const { data, user } = props;
@@ -23,8 +22,8 @@ export default function Index(props) {
 }
 
 export const getStaticProps = async () => {
-  const res = await fetch('http://localhost:3000/api/product')
-    const data = await res.json();
+  const { data } = await axios.get('http://localhost:3000/api/product')
+  // console.log(data)
     return {
       props: { data }
     }

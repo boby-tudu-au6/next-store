@@ -20,7 +20,10 @@
     "nookies": "^2.5.2",
     "prop-types": "latest",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "react-stripe-checkout": "^2.6.3",
+    "stripe": "^8.145.0",
+    "uuid": "^8.3.2"
   },
   "scripts": {
     "dev": "next",

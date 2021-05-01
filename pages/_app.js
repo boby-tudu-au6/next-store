@@ -30,12 +30,4 @@ function MyApp(props) {
   );
 }
 
-
-export const getStaticProps = () => {
-  console.log("static props running")
-  return {
-    props: {}
-  }
-}
-
 export default MyApp;

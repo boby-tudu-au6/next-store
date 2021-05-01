@@ -6,10 +6,9 @@ initDb();
 
 export default async (req, res) => {
     try {
-        console.log('hello')
         const { token } = req.query;
         const decoded = jwt.verify(token, process.env.SECRET)
-        const data = await Cart.find({ user: decoded.user }).populate('user')
+        const data = await Cart.findOne({ user: decoded.user }).populate('user').populate('products.product')
         return res.status(200).json({ data });
     } catch (error) {
         return res.status(500).json({ error: error.message });

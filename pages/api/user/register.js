@@ -1,4 +1,4 @@
-import { User } from 'server/modals';
+import { User, Cart } from 'server/modals';
 import bcrypt from 'bcrypt';
 import initDb from 'server/initDb';
 
@@ -12,6 +12,7 @@ export default async (req, res) => {
         if (user !== null) return res.status(406).json({ message: 'User already exist with email id' });
         const hash = bcrypt.hashSync(password, 10);
         const newUser = await User.create({ phone, email, password: hash });
+        await Cart.create({ user: newUser._id });
         return res.status(201).json({ message: 'Register successfull' });
     } catch (error) {
         return res.status(500).json({ error: error.message });

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Link from 'next/link';
 import { 
@@ -6,6 +6,9 @@ import {
     CardContent, CardMedia, Button
 } from '@material-ui/core';
 import axios from 'axios';
+import { parseCookies } from 'nookies';
+import Snackbar from 'components/Snackbar';
+
 
 const useStyles = makeStyles({
   root: {
@@ -19,21 +22,31 @@ const useStyles = makeStyles({
 export default function MediaCard(props) {
   const { name, price, media, desc, _id, user } = props;
   const classes = useStyles();
+  const [state, setstate] = useState({
+    title: '',
+    severity: '',
+    open: false
+  })
 
   const addItemToCart = async (product) => {
     try {
-      const { data } = await axios.post('/api/user/cart', {
-        product, user: user._id
-      });
-      console.log(data);
+      const cookies = parseCookies();
+      if (cookies && cookies.user) {
+        const { token } = JSON.parse(cookies.user);
+        const { data } = await axios.post(`http://localhost:3000/api/user/cart`, {
+          product, quantity: 1, token
+        });
+        console.log(data.message);
+        setstate({ title: data.message, severity: 'success', open: true });
+      }
     } catch (error) {
-      console.log(error.message);
-      console.log(error.response)
+      setstate({ title: error.message, severity: 'erro', open: true });
     }
   }
 
   return (
         <Card className={classes.root}>
+          <Snackbar {...state} />
           <Link href={`/product/${_id}`}>
             <a>
               <CardActionArea>

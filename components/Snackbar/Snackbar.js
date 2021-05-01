@@ -6,11 +6,12 @@ import CloseIcon from '@material-ui/icons/Close';
 import Alert from '@material-ui/lab/Alert';
 
 export default function SimpleSnackbar(props) {
-  const { title, severity, open } = props;
+  const { title, severity, open, onClose } = props;
 
   return (
     <div>
       <Snackbar
+      onClose={onClose}
       anchorOrigin={{
         vertical: 'bottom',
         horizontal: 'left',
